@@ -137,6 +137,7 @@ namespace ITSupportCenter.Core
             Register(new ExtractOemBiosKeyTool());
             Register(new CleanKmsAndResetTokensTool());
             Register(new DiagnoseOfficeLicenseTool());
+            Register(new ToggleOfficeUpdateLockTool());
             Register(new SwitchWindowsEditionTool());
         }
     }

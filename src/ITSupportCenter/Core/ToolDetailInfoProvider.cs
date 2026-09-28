@@ -229,6 +229,12 @@ namespace ITSupportCenter.Core
                 SystemImpact = "Mengeksekusi script resmi Microsoft 'OSPP.VBS /dstatus' di folder Program Files Office.",
                 UsageGuide = "Gunakan untuk melihat sisa masa aktif Office atau menghapus key Office yang bentrok."
             },
+            ["lic_toggle_office_update_lock"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Update otomatis Microsoft Office sering merusak aktivasi lisensi KMS/Volume, memunculkan notifikasi lisensi bajakan, atau merusak macro Excel/VBA.",
+                SystemImpact = "Mengatur UpdatesEnabled='False' pada ClickToRun Configuration, mengunci GPO EnableAutomaticUpdates=0, dan menonaktifkan Task Scheduler background Office Automatic Updates 2.0.",
+                UsageGuide = "1. Klik tombol 'Kunci / Buka Update Office'.\n2. Klik 1 kali untuk mengunci dan mematikan update permanen.\n3. Klik sekali lagi di kemudian hari jika ingin mengaktifkan kembali pembaruan normal."
+            },
             ["lic_switch_edition"] = new ToolDetailInfo
             {
                 ProblemSolved = "Meng-upgrade Windows 10/11 Home ke edisi Professional (Pro) tanpa perlu instal ulang atau format ulang.",
