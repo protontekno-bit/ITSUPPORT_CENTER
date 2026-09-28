@@ -11,7 +11,7 @@ setlocal enabledelayedexpansion
 pushd "%~dp0" 2>nul
 if %errorlevel% neq 0 cd /d "%~dp0" 2>nul
 
-title IT Support Center 2026 v3.2.0 - Smart Launcher
+title IT Support Center 2026 v3.2.0 - Powered by AuraCore (https://www.auracore.my.id)
 
 :: 1. AUTO-ELEVATE ADMINISTRATOR (Dual-Layer: PowerShell + VBScript Fallback)
 net session >nul 2>&1

@@ -27,7 +27,7 @@ if %errorlevel% neq 0 (
 )
 
 :: 3. SETUP TAMPILAN WINDOWS CONSOLE
-title IT SUPPORT & SECURITY CENTER - [ADMINISTRATOR]
+title IT SUPPORT & SECURITY CENTER - Powered by AuraCore (https://www.auracore.my.id)
 mode con cols=92 lines=42
 color 0F
 
@@ -35,6 +35,7 @@ color 0F
 cls
 echo ============================================================================================
 echo                   IT SUPPORT ^& SECURITY TOOL CENTER (v3.2.0 Enterprise)
+echo                   🌐 Pengembang Resmi: AuraCore (https://www.auracore.my.id)
 echo ============================================================================================
 echo  Direktori Kerja: %~dp0
 echo  DISCLAIMER     : Software disediakan 'AS-IS'. Segala risiko eksekusi ditanggung pengguna.
@@ -777,6 +778,9 @@ goto MAIN_MENU
 :EXIT_APP
 cls
 echo.
+echo ============================================================================================
 echo Terima kasih telah menggunakan IT Support ^& Security Center.
-timeout /t 1 >nul
+echo Dikembangkan oleh AuraCore: https://www.auracore.my.id
+echo ============================================================================================
+timeout /t 2 >nul
 exit /b

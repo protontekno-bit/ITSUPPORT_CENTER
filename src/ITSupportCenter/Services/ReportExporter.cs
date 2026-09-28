@@ -101,7 +101,7 @@ namespace ITSupportCenter.Services
             }
 
             sb.AppendLine("    <div class='footer'>");
-            sb.AppendLine($"      <span>Dokumen ini dihasilkan secara otomatis oleh IT Support Center v6.0</span>");
+            sb.AppendLine("      <span>Dokumen ini dihasilkan oleh IT Support Center Enterprise | Dikembangkan oleh <a href='https://www.auracore.my.id' target='_blank' style='color:#3498db; text-decoration:none; font-weight:bold;'>AuraCore (www.auracore.my.id)</a></span>");
             sb.AppendLine("      <span>Tanda Tangan Teknisi: ____________________</span>");
             sb.AppendLine("    </div>");
             sb.AppendLine("  </div>");

@@ -1,5 +1,7 @@
 # 🤖 PANDUAN PENGEMBANGAN AI & MODULAR ARSITEKTUR (IT SUPPORT CENTER)
 
+**Pengembang Resmi / Author:** [AuraCore](https://www.auracore.my.id) (`https://www.auracore.my.id`)
+
 Dokumen ini adalah panduan standar bagi **AI Coding Assistant** dan **Pengembang Manusia** untuk memelihara, memodifikasi, dan menambahkan fitur/modul baru ke dalam aplikasi **IT Support Center** tanpa merusak modul yang sudah ada.
 
 ---

@@ -16,11 +16,12 @@
     <Version>3.2.0</Version>
     <AssemblyVersion>3.2.0.0</AssemblyVersion>
     <FileVersion>3.2.0.0</FileVersion>
-    <InformationalVersion>3.2.0-Enterprise</InformationalVersion>
-    <Company>IT Support Center Community</Company>
+    <Company>AuraCore</Company>
+    <Authors>AuraCore (https://www.auracore.my.id)</Authors>
+    <PackageProjectUrl>https://www.auracore.my.id</PackageProjectUrl>
     <Product>IT Support Center 2026 Enterprise</Product>
-    <Copyright>Copyright © 2026 IT Support Center. All rights reserved.</Copyright>
-    <Description>Enterprise Modular IT Support &amp; System Maintenance Hub</Description>
+    <Copyright>Copyright © 2026 AuraCore (https://www.auracore.my.id). All rights reserved.</Copyright>
+    <Description>Enterprise Modular IT Support &amp; System Maintenance Hub - Powered by AuraCore</Description>
   </PropertyGroup>
 
   <ItemGroup>

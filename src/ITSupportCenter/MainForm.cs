@@ -38,7 +38,7 @@ namespace ITSupportCenter
 
         private void InitializeComponent()
         {
-            Text = "IT Support Center 2026 (v3.2.0 Enterprise) - Modular Toolkit";
+            Text = "IT Support Center 2026 (v3.2.0 Enterprise) — AuraCore (https://www.auracore.my.id)";
             Size = new Size(1180, 780);
             MinimumSize = new Size(980, 640);
             StartPosition = FormStartPosition.CenterScreen;
@@ -88,6 +88,34 @@ namespace ITSupportCenter
                 AutoSize = true
             };
 
+            var lnkDeveloper = new LinkLabel
+            {
+                Text = "🌐 AuraCore: https://www.auracore.my.id",
+                Font = new Font("Segoe UI", 9F, FontStyle.Bold),
+                LinkColor = Color.FromArgb(52, 152, 219),
+                ActiveLinkColor = Color.FromArgb(46, 204, 113),
+                VisitedLinkColor = Color.FromArgb(52, 152, 219),
+                Dock = DockStyle.Right,
+                TextAlign = ContentAlignment.MiddleRight,
+                Padding = new Padding(0, 0, 16, 0),
+                AutoSize = false,
+                Width = 320,
+                Cursor = Cursors.Hand
+            };
+            lnkDeveloper.LinkClicked += (s, e) =>
+            {
+                try
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = "https://www.auracore.my.id",
+                        UseShellExecute = true
+                    });
+                }
+                catch { }
+            };
+
+            headerPanel.Controls.Add(lnkDeveloper);
             headerPanel.Controls.Add(lblAppTitle);
             headerPanel.Controls.Add(lblSubtitle);
 
@@ -342,8 +370,32 @@ namespace ITSupportCenter
                 Margin = new Padding(4, 3, 4, 3)
             };
 
+            var lblDeveloperLink = new ToolStripStatusLabel
+            {
+                Text = "🌐 AuraCore: https://www.auracore.my.id",
+                IsLink = true,
+                LinkColor = Color.FromArgb(52, 152, 219),
+                ActiveLinkColor = Color.FromArgb(46, 204, 113),
+                VisitedLinkColor = Color.FromArgb(52, 152, 219),
+                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                Alignment = ToolStripItemAlignment.Right
+            };
+            lblDeveloperLink.Click += (s, e) =>
+            {
+                try
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = "https://www.auracore.my.id",
+                        UseShellExecute = true
+                    });
+                }
+                catch { }
+            };
+
             _statusStrip.Items.Add(_lblStatusInfo);
             _statusStrip.Items.Add(_progressBar);
+            _statusStrip.Items.Add(lblDeveloperLink);
 
             splitContainer.Panel1.Controls.Add(leftPanel);
             splitContainer.Panel2.Controls.Add(rightPanel);
@@ -499,6 +551,7 @@ namespace ITSupportCenter
         {
             Logger.Log("=======================================================================", LogType.Info);
             Logger.Log("🚀 IT SUPPORT CENTER 2026 (v3.2.0 Enterprise Edition) - READY", LogType.Success);
+            Logger.Log("🌐 Dikembangkan & Didukung oleh AuraCore: https://www.auracore.my.id", LogType.Info);
             Logger.Log("=======================================================================", LogType.Info);
 
             var osInfo = OsDetector.GetOsInfo();
