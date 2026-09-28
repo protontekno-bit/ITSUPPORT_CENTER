@@ -129,6 +129,8 @@ echo   71. 🖥️ Pusat Manajemen ^& Aktivator Windows RDP (Enable, Port, Firew
 echo   72. 🔒 Kunci / Buka Update Microsoft Office Permanen (C2R Registry ^& Tasks)
 echo   73. 🚑 Pertolongan Pertama Office ^& Outlook (Safe Mode, scanpst.exe, Normal.dotm)
 echo   74. 🧹 Pembersih Konflik Lisensi ^& Akun Office (Ghost Key ^& Token Reset)
+echo   75. 💾 Penyelamatan ^& Migrasi Data User (Backup / Restore Profil, Desktop, Dokumen)
+echo   76. 📜 Cetak Berita Acara ^& Laporan Servis IT (HTML / Print to PDF)
 echo.
 echo ============================================================================================
 echo   0.  ❌ Keluar
@@ -136,7 +138,7 @@ echo ===========================================================================
 echo.
 
 set "CHOICE="
-set /p "CHOICE=Masukkan Nomor Menu Pilihan Anda [0-74]: "
+set /p "CHOICE=Masukkan Nomor Menu Pilihan Anda [0-76]: "
 
 if "%CHOICE%"=="1" goto SHOW_PC_ASSET
 if "%CHOICE%"=="2" goto BATTERY_REPORT
@@ -212,6 +214,8 @@ if "%CHOICE%"=="71" goto RDP_MANAGER_HUB
 if "%CHOICE%"=="72" goto TOGGLE_OFFICE_LOCK
 if "%CHOICE%"=="73" goto OFFICE_RESCUE_HUB
 if "%CHOICE%"=="74" goto CLEAN_OFFICE_CONFLICT
+if "%CHOICE%"=="75" goto BACKUP_USER_PROFILE
+if "%CHOICE%"=="76" goto GENERATE_SERVICE_REPORT
 if "%CHOICE%"=="0" goto EXIT_APP
 
 echo.
@@ -681,6 +685,16 @@ goto BACK_TO_MENU
 :CLEAN_OFFICE_CONFLICT
 cls
 call "%~dp0scripts\clean_office_license_conflict.bat"
+goto BACK_TO_MENU
+
+:BACKUP_USER_PROFILE
+cls
+call "%~dp0scripts\backup_restore_user_profile.bat"
+goto BACK_TO_MENU
+
+:GENERATE_SERVICE_REPORT
+cls
+call "%~dp0scripts\generate_service_report.bat"
 goto BACK_TO_MENU
 
 :BACK_TO_MENU

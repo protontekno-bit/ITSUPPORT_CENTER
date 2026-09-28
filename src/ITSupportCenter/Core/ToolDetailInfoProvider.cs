@@ -345,6 +345,18 @@ namespace ITSupportCenter.Core
                 SystemImpact = "Menyediakan opsi Safe Mode (/safe), pemulihan Navigation Pane Outlook (/resetnavpane), peluncur otomatis scanpst.exe, regenerasi template Word/Excel, pembersihan OfficeFileCache, dan pemicu Click-to-Run Quick Repair resmi.",
                 UsageGuide = "1. Klik tombol 'Buka Rescue Hub Office & Outlook'.\n2. Pilih nomor opsi sesuai masalah yang dialami (1-6).\n3. Ikuti panduan di log terminal atau jendela Microsoft yang terbuka."
             },
+            ["sys_user_data_backup_restore"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Menyelamatkan data profil esensial user (Desktop, Documents, Downloads, Pictures, Bookmarks Chrome/Edge, Signatures Outlook, dan Sticky Notes) sebelum komputer diservis atau diinstal ulang.",
+                SystemImpact = "Mengeksekusi penyalinan berkas multi-threaded (robocopy) ke direktori tujuan (Drive D:, E:, atau flashdisk eksternal) dan menyediakan mode pemulihan data.",
+                UsageGuide = "1. Klik tombol 'Penyelamatan Data User'.\n2. Pilih Opsi 1 untuk mencadangkan profil ke drive D:/flashdisk.\n3. Gunakan Opsi 2 untuk memulihkan kembali data setelah Windows selesai diinstal."
+            },
+            ["sys_service_report_generator"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Membuat Berita Acara & Laporan Servis Teknis PC resmi berformat HTML profesional siap cetak ke PDF untuk lampiran sistem tiket IT (Jira/GLPI) atau serah terima unit ke pengguna.",
+                SystemImpact = "Membaca spesifikasi hardware, serial number motherboard, kapasitas & S.M.A.R.T disk, merangkum tindakan perbaikan, dan menghasilkan laporan HTML rapi lengkap dengan blok tanda tangan.",
+                UsageGuide = "1. Klik tombol 'Cetak Laporan Servis IT'.\n2. Masukkan nama teknisi, nama pengguna, dan ringkasan tindakan perbaikan.\n3. Dokumen HTML akan terbuka otomatis di browser dan siap dicetak/disimpan ke PDF (Ctrl+P)."
+            },
 
             // === REMOTE DESKTOP & SUPPORT ===
             ["remote_rdp_manager_hub"] = new ToolDetailInfo

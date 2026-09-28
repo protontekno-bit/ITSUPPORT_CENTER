@@ -114,6 +114,8 @@ namespace ITSupportCenter.Core
             Register(new VentoyMultiBootGuideTool());
             Register(new DeepHardwareHealthInspectorTool());
             Register(new OfficeRescueHubTool());
+            Register(new UserDataBackupRestoreTool());
+            Register(new ServiceReportGeneratorTool());
 
             // --- REMOTE DESKTOP & SUPPORT ---
             Register(new WindowsRdpManagerHubTool());
