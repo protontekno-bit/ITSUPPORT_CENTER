@@ -134,6 +134,10 @@ echo   76. 📜 Cetak Berita Acara ^& Laporan Servis IT (HTML / Print to PDF)
 echo   77. ⚡ 1-Klik Pemeliharaan ^& Tune-Up Rutin Komputer (All-in-One)
 echo   78. ⚡ Wake-on-LAN (WoL) ^& Pengatur Cepat Profil IP (DHCP / Static)
 echo   79. 📶 Ekspor ^& Impor Massal Profil Wi-Fi (.XML Password Backup)
+echo   80. 🕵️ Inspeksi Pembajakan Startup ^& Persistence (Sysinternals Lite)
+echo   81. 🔧 Perbaikan Total WMI ^& Hak Akses Sistem (ACL Rebuilder)
+echo   82. 🚀 Aktivasi Ultimate Performance ^& Optimasi Latensi (CTT Style)
+echo   83. 🗑️ Penghapus Paksa Program Macet (Force Uninstaller)
 echo.
 echo ============================================================================================
 echo   0.  ❌ Keluar
@@ -141,7 +145,7 @@ echo ===========================================================================
 echo.
 
 set "CHOICE="
-set /p "CHOICE=Masukkan Nomor Menu Pilihan Anda [0-79]: "
+set /p "CHOICE=Masukkan Nomor Menu Pilihan Anda [0-83]: "
 
 if "%CHOICE%"=="1" goto SHOW_PC_ASSET
 if "%CHOICE%"=="2" goto BATTERY_REPORT
@@ -222,6 +226,10 @@ if "%CHOICE%"=="76" goto GENERATE_SERVICE_REPORT
 if "%CHOICE%"=="77" goto ROUTINE_TUNEUP
 if "%CHOICE%"=="78" goto WOL_IP_SWITCHER
 if "%CHOICE%"=="79" goto WIFI_PROFILE_EXPORTER
+if "%CHOICE%"=="80" goto AUTORUNS_INSPECTOR
+if "%CHOICE%"=="81" goto WMI_ACL_REBUILD
+if "%CHOICE%"=="82" goto ULTIMATE_PERF
+if "%CHOICE%"=="83" goto FORCE_UNINSTALL
 if "%CHOICE%"=="0" goto EXIT_APP
 
 echo.
@@ -716,6 +724,26 @@ goto BACK_TO_MENU
 :WIFI_PROFILE_EXPORTER
 cls
 call "%~dp0scripts\export_import_wifi_profiles.bat"
+goto BACK_TO_MENU
+
+:AUTORUNS_INSPECTOR
+cls
+call "%~dp0scripts\autoruns_persistence_inspector.bat"
+goto BACK_TO_MENU
+
+:WMI_ACL_REBUILD
+cls
+call "%~dp0scripts\rebuild_wmi_and_permissions.bat"
+goto BACK_TO_MENU
+
+:ULTIMATE_PERF
+cls
+call "%~dp0scripts\unlock_ultimate_performance.bat"
+goto BACK_TO_MENU
+
+:FORCE_UNINSTALL
+cls
+call "%~dp0scripts\force_software_nuker.bat"
 goto BACK_TO_MENU
 
 :BACK_TO_MENU

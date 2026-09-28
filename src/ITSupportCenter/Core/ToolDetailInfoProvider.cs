@@ -375,6 +375,24 @@ namespace ITSupportCenter.Core
                 SystemImpact = "Mengeksekusi 5 tahap optimalisasi berantai secara otomatis dalam hitungan detik tanpa menutup software aktif pengguna.",
                 UsageGuide = "1. Klik tombol 'Jalankan 1-Klik Tune-Up Rutin'.\n2. Konfirmasi 'Yes' saat prompt pemeliharaan muncul.\n3. Pantau progres eksekusi di terminal hingga muncul pesan selesai."
             },
+            ["sys_wmi_acl_rebuilder"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Memperbaiki repositori WMI yang korup (winmgmt /resetrepository) sehingga sensor hardware, Task Manager, dan Device Manager kembali normal, serta memulihkan hak akses default (ACL/icacls) untuk mengatasi error 'Access Denied'.",
+                SystemImpact = "Mereset repositori WMI Windows, mendaftarkan ulang seluruh DLL Wbem, dan merestore permission folder System32 via icacls.",
+                UsageGuide = "1. Klik tombol 'Perbaiki WMI & Hak Akses'.\n2. Pilih opsi 1 untuk rebuild database WMI jika informasi spek PC kosong.\n3. Pilih opsi 2 jika sering muncul error Access Denied saat install software."
+            },
+            ["sys_ultimate_performance_engine"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Membuka skema daya 'Ultimate Performance' bawaan Windows Workstation untuk membebaskan batas clock CPU, mematikan network throttling saat multitasking, dan membersihkan memory dump BSOD lama.",
+                SystemImpact = "Mengeksekusi powercfg duplicate scheme e9a42b02-d5df-448d-aa00-03f14749eb61, mengatur registry Multimedia SystemProfile, dan menghapus dump MEMORY.DMP.",
+                UsageGuide = "1. Klik tombol 'Optimasi Ultimate Performance'.\n2. Pilih opsi 4 untuk menerapkan paket optimasi penuh pada PC kantor atau PC workstation editing."
+            },
+            ["sys_force_software_nuker"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Mencopot paksa software yang uninstaller-nya rusak, hilang, atau gagal dicopot melalui Control Panel Windows.",
+                SystemImpact = "Memindai dan menghapus entri instalasi rusak di registry HKLM Uninstall (64-bit & WOW6432Node).",
+                UsageGuide = "1. Klik tombol 'Penghapus Paksa Software'.\n2. Pilih opsi 1 untuk mencari nama registry key program.\n3. Masukkan nama key pada opsi 2 untuk menghapusnya secara paksa."
+            },
 
             // === REMOTE DESKTOP & SUPPORT ===
             ["remote_rdp_manager_hub"] = new ToolDetailInfo
@@ -462,6 +480,12 @@ namespace ITSupportCenter.Core
                 ProblemSolved = "Mengecek status aktif profil Firewall (Domain, Private, Public) dan menyalakan/mematikan profil tertentu untuk kebutuhan pengujian.",
                 SystemImpact = "Menjalankan perintah 'netsh advfirewall set [profile] state on/off'.",
                 UsageGuide = "Gunakan untuk audit keamanan jaringan atau pengujian koneksi sementara."
+            },
+            ["sec_autoruns_persistence_inspector"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Mendeteksi malware, trojan, dan script berbahaya yang bersembunyi di titik persistensi startup kritis: pembajakan Winlogon Shell/Userinit, IFEO debugger hijack, dan Registry Run.",
+                SystemImpact = "Memindai registry persistensi sistem secara mendalam (Sysinternals Autoruns style) dan menyediakan opsi 1-klik untuk merestore Shell ke explorer.exe.",
+                UsageGuide = "1. Klik tombol 'Inspeksi Autoruns & Pembajakan'.\n2. Pilih opsi 1 untuk memindai titik pembajakan.\n3. Jika Winlogon terdeteksi dibajak, gunakan opsi 2 untuk memulihkannya ke default."
             },
 
             // === LICENSE AUDIT & MANAGEMENT ===

@@ -20,7 +20,7 @@ Aplikasi dibangun menggunakan prinsip **Command / Plugin Pattern** di C# .NET 8 
 d:\ITTOOLS\
 ├── ITSupportCenter.exe            # Standalone GUI Executable (Primary Launcher .NET 8)
 ├── START.bat                      # Master Universal Bootstrapper (Auto Admin Elevation)
-├── IT_SUPPORT_CENTER.bat          # Master CLI Terminal Launcher (70 Menu Lengkap)
+├── IT_SUPPORT_CENTER.bat          # Master CLI Terminal Launcher (83 Menu Lengkap)
 ├── AI_DEV_GUIDE.md                # Dokumen Panduan Arsitektur & Standar Pengembangan
 ├── installers\                    # Utilitas & Installer Setup pihak ketiga (Nmap, dll.)
 │   └── nmap-7.98-setup.exe

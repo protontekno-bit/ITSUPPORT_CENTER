@@ -119,6 +119,9 @@ namespace ITSupportCenter.Core
             Register(new UserDataBackupRestoreTool());
             Register(new ServiceReportGeneratorTool());
             Register(new OneClickTuneUpSuiteTool());
+            Register(new WmiAclRebuilderTool());
+            Register(new UltimatePerformanceEngineTool());
+            Register(new ForceSoftwareNukerTool());
 
             // --- REMOTE DESKTOP & SUPPORT ---
             Register(new WindowsRdpManagerHubTool());
@@ -137,6 +140,7 @@ namespace ITSupportCenter.Core
             Register(new EmergencyNetworkQuarantineTool());
             Register(new FirewallPortManagerHubTool());
             Register(new ToggleFirewallProfilesTool());
+            Register(new AutorunsPersistenceInspectorTool());
 
             // --- LICENSE AUDIT & MANAGEMENT ---
             Register(new AuditWindowsLicenseTool());
