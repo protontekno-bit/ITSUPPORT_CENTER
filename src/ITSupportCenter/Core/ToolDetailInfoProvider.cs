@@ -235,6 +235,18 @@ namespace ITSupportCenter.Core
                 SystemImpact = "Mengatur UpdatesEnabled='False' pada ClickToRun Configuration, mengunci GPO EnableAutomaticUpdates=0, dan menonaktifkan Task Scheduler background Office Automatic Updates 2.0.",
                 UsageGuide = "1. Klik tombol 'Kunci / Buka Update Office'.\n2. Klik 1 kali untuk mengunci dan mematikan update permanen.\n3. Klik sekali lagi di kemudian hari jika ingin mengaktifkan kembali pembaruan normal."
             },
+            ["sys_office_rescue_hub"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Mengatasi Word, Excel, PowerPoint, atau Outlook yang crash, freeze di splash screen, error tampilan/startup Outlook ('Cannot open window'), template default Normal.dotm korup, atau dokumen macet 'Upload Failed' / 'File Locked'.",
+                SystemImpact = "Menyediakan opsi Safe Mode (/safe), pemulihan Navigation Pane Outlook (/resetnavpane), peluncur otomatis scanpst.exe, regenerasi template Word/Excel, pembersihan OfficeFileCache, dan pemicu Click-to-Run Quick Repair resmi.",
+                UsageGuide = "1. Klik tombol 'Buka Rescue Hub Office & Outlook'.\n2. Pilih nomor opsi sesuai masalah yang dialami (1-6).\n3. Ikuti panduan di log terminal atau jendela Microsoft yang terbuka."
+            },
+            ["lic_office_conflict_cleaner"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Mengatasi banner kuning 'Unlicensed Product' atau 'Activation Failed' akibat adanya sisa lisensi trial/grace lama yang bentrok di ospp.vbs, serta mengatasi loop login akun kantor/sekolah yang macet.",
+                SystemImpact = "Memindai lisensi via OSPP.VBS, menghapus key spesifik dengan /unpkey:XXXXX, dan mereset token Modern Authentication (OneAuth, IdentityCache, dan kredensial Windows).",
+                UsageGuide = "1. Klik tombol 'Pembersih Lisensi & Akun Office'.\n2. Pilih opsi 1 untuk memindai key sisa.\n3. Pilih opsi 2 dan masukkan 5 karakter terakhir key yang ingin dihapus, atau pilih opsi 3/4 untuk mereset cache login."
+            },
             ["lic_switch_edition"] = new ToolDetailInfo
             {
                 ProblemSolved = "Meng-upgrade Windows 10/11 Home ke edisi Professional (Pro) tanpa perlu instal ulang atau format ulang.",

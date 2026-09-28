@@ -113,6 +113,7 @@ namespace ITSupportCenter.Core
             Register(new DiskCloningDeploymentHubTool());
             Register(new VentoyMultiBootGuideTool());
             Register(new DeepHardwareHealthInspectorTool());
+            Register(new OfficeRescueHubTool());
 
             // --- REMOTE DESKTOP & SUPPORT ---
             Register(new WindowsRdpManagerHubTool());
@@ -138,6 +139,7 @@ namespace ITSupportCenter.Core
             Register(new CleanKmsAndResetTokensTool());
             Register(new DiagnoseOfficeLicenseTool());
             Register(new ToggleOfficeUpdateLockTool());
+            Register(new OfficeLicenseConflictCleanerTool());
             Register(new SwitchWindowsEditionTool());
         }
     }
