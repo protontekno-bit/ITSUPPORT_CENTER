@@ -197,6 +197,12 @@ namespace ITSupportCenter.Core
                 SystemImpact = "Memanggil Windows API EmptyWorkingSet untuk melepaskan cache RAM idle dari proses aktif tanpa menutup aplikasi pengguna, serta menghentikan background updater/telemetry non-esensial dengan proteksi kernel Windows.",
                 UsageGuide = "1. Klik tombol 'Optimalkan RAM & Proses'.\n2. Tool akan memindai status RAM, mendeteksi proses terberat, dan memangkas memori idle secara instan.\n3. Pantau pembebasan RAM pada Terminal Log utama."
             },
+            ["remote_rdp_manager_hub"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Windows Remote Desktop (RDP) tidak bisa diakses, port 3389 terblokir firewall, error NLA (Network Level Authentication), atau teknisi ingin membimbing layar user tanpa me-logout sesi aktif.",
+                SystemImpact = "Mengatur fDenyTSConnections pada Terminal Server registry, mengonfigurasi Service TermService ke Automatic, mengatur aturan Windows Firewall port 3389/custom, dan mengaktifkan RDP Shadowing policy.",
+                UsageGuide = "1. Klik tombol 'Pusat Utilitas Windows RDP'.\n2. Pilih opsi 1 untuk mengaktifkan RDP Host penuh dan buka firewall secara instan.\n3. Pilih opsi 5 untuk Quick Connect RDP Client ke PC target.\n4. Pilih opsi 6 untuk Remote Shadowing layar pengguna tanpa logout."
+            },
 
             // === LICENSE AUDIT ===
             ["lic_audit_win_license"] = new ToolDetailInfo

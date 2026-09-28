@@ -115,6 +115,7 @@ namespace ITSupportCenter.Core
             Register(new DeepHardwareHealthInspectorTool());
 
             // --- REMOTE DESKTOP & SUPPORT ---
+            Register(new WindowsRdpManagerHubTool());
             Register(new ResetAnyDeskIdTool());
             Register(new ChangeTeamViewerPasswordTool());
             Register(new RustDeskManagerHubTool());
