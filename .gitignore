@@ -1,0 +1,34 @@
+# ==============================================================================
+# .gitignore for IT Support Center (.NET 8 + Standalone Tools Suite)
+# ==============================================================================
+
+# Build & Intermediate Output
+[Bb]in/
+[Oo]bj/
+*.pdb
+*.dll
+*.exe.config
+
+# Large Compiled Binaries & Release Packages (Generate via build script)
+ITSupportCenter.exe
+dist/
+installers/*.exe
+
+# Visual Studio & IDE Cache
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Windows System Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Temporary / Scratch Files
+*.tmp
+*.temp
+*.log

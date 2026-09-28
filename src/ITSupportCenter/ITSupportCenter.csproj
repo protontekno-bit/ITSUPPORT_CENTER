@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyName>ITSupportCenter</AssemblyName>
+    <RootNamespace>ITSupportCenter</RootNamespace>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <Version>3.2.0</Version>
+    <AssemblyVersion>3.2.0.0</AssemblyVersion>
+    <FileVersion>3.2.0.0</FileVersion>
+    <InformationalVersion>3.2.0-Enterprise</InformationalVersion>
+    <Company>IT Support Center Community</Company>
+    <Product>IT Support Center 2026 Enterprise</Product>
+    <Copyright>Copyright © 2026 IT Support Center. All rights reserved.</Copyright>
+    <Description>Enterprise Modular IT Support &amp; System Maintenance Hub</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="8.0.0" />
+    <PackageReference Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+
+  <Target Name="ApplySwapRunFlags" AfterTargets="Publish;AfterBuild">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;if (Test-Path '$(TargetPath)') { $s=[System.IO.File]::Open('$(TargetPath)',[System.IO.FileMode]::Open,[System.IO.FileAccess]::ReadWrite); $r=New-Object System.IO.BinaryReader($s); $w=New-Object System.IO.BinaryWriter($s); $s.Seek(0x3C,[System.IO.SeekOrigin]::Begin); $pe=$r.ReadInt32(); $s.Seek($pe+22,[System.IO.SeekOrigin]::Begin); $ch=$r.ReadUInt16(); $n=$ch -bor 0x0C00; $s.Seek($pe+22,[System.IO.SeekOrigin]::Begin); $w.Write([uint16]$n); $s.Flush(); $s.Close(); Write-Host 'Applied SWAPRUN:NET &amp; REMOVABLE flags to $(TargetPath)' }&quot;" ContinueOnError="true" />
+  </Target>
+
+</Project>
