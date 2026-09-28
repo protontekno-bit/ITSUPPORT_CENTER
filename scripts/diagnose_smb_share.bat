@@ -8,8 +8,8 @@ echo          DIAGNOSA KONEKSI FILE SHARING (SMB)
 echo ========================================================
 echo.
 
-set "TARGET=192.168.1.194"
-set /p "USER_INPUT=Masukkan IP Server Target [Default: 192.168.1.194]: "
+set "TARGET=192.168.1.100"
+set /p "USER_INPUT=Masukkan IP Server Target [Default: 192.168.1.100]: "
 if not "%USER_INPUT%"=="" set "TARGET=%USER_INPUT%"
 
 echo.
@@ -39,7 +39,7 @@ if %errorlevel% == 0 (
     echo    [OK] Port 445 Terbuka (Service Sharing jalan).
 ) else (
     echo    [GAGAL] Port 445 Tertutup.
-    echo    SOLUSI: Cek Firewall di 192.168.1.194 atau pastikan service SMB server nyala.
+    echo    SOLUSI: Cek Firewall di %TARGET% atau pastikan service SMB server nyala.
     goto :end
 )
 echo.

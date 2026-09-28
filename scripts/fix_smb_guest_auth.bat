@@ -23,7 +23,7 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" /v
 if %errorlevel% equ 0 (
     echo.
     echo [SUKSES] Konfigurasi berhasil diterapkan!
-    echo Anda sekarang bisa mencoba akses ke \\192.168.1.194
+    echo Anda sekarang bisa mencoba akses kembali ke folder network share Anda (contoh \\SERVER-SHARE atau \\192.168.1.100).
     echo.
     echo Catatan: Jika masih belum bisa, silakan Restart komputer.
 ) else (

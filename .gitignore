@@ -32,3 +32,32 @@ $RECYCLE.BIN/
 *.tmp
 *.temp
 *.log
+scratch/
+
+# Security & Data Leak Prevention (Anti-Data Leak)
+*.key
+*.pem
+*.pfx
+*.p12
+*.cer
+*.crt
+*.env
+*.env.*
+*.bak
+*.old
+*.swp
+
+# Exported User Reports & Sensitive Network Dumps
+*.html
+!src/**/*.html
+*.xml
+!src/**/*.xml
+!**/*.csproj
+!**/*.manifest
+battery_report.html
+service_report_*.html
+wifi_profiles_*.xml
+reports/
+backups/
+backup/
+UserProfiles/

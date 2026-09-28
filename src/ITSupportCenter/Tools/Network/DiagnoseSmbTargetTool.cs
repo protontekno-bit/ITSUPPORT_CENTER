@@ -21,7 +21,7 @@ namespace ITSupportCenter.Tools.Network
 
         public async Task ExecuteAsync()
         {
-            string targetIp = PromptInput("Masukkan IP Server Target:", "192.168.1.194");
+            string targetIp = PromptInput("Masukkan IP Server Target:", "192.168.1.100");
             if (string.IsNullOrWhiteSpace(targetIp)) return;
 
             Logger.Log($"=== MEMULAI DIAGNOSA SERVER SMB: {targetIp} ===");

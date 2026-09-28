@@ -100,9 +100,9 @@ def main():
     print("[INFO] Script berjalan dengan hak administrator\n")
     
     # Minta input alamat IP
-    ip_address = input("Masukkan alamat IP shared folder (contoh: 192.168.1.194): ").strip()
+    ip_address = input("Masukkan alamat IP shared folder (contoh: 192.168.1.100): ").strip()
     if not ip_address:
-        ip_address = "192.168.1.194"
+        ip_address = "192.168.1.100"
         print(f"[INFO] Menggunakan IP default: {ip_address}")
     
     # 1. Ubah registry
