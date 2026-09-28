@@ -1,0 +1,86 @@
+name: Build & Release Portable Executable
+
+on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag Version (e.g. v3.2.0)'
+        required: false
+        default: 'v3.2.0'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Self-Contained Windows Executable
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore NuGet Packages
+        run: dotnet restore src/ITSupportCenter/ITSupportCenter.csproj
+
+      - name: Compile & Publish Single-File Executable
+        run: |
+          dotnet publish src/ITSupportCenter/ITSupportCenter.csproj `
+            -c Release `
+            -r win-x64 `
+            --self-contained true `
+            -p:PublishSingleFile=true `
+            -p:EnableCompressionInSingleFile=true `
+            -o publish_bin
+
+      - name: Package Portable Distribution ZIP
+        shell: pwsh
+        run: |
+          $ver = "${{ github.ref_name }}"
+          if ([string]::IsNullOrWhiteSpace($ver) -or $ver -eq "main") {
+            $ver = "${{ github.event.inputs.tag_name }}"
+            if ([string]::IsNullOrWhiteSpace($ver)) { $ver = "v3.2.0" }
+          }
+          
+          $pkgDir = "ITSupportCenter-Portable"
+          New-Item -ItemType Directory -Path $pkgDir -Force | Out-Null
+
+          # Copy compiled binary
+          Copy-Item "publish_bin/ITSupportCenter.exe" -Destination "$pkgDir/ITSupportCenter.exe" -Force
+          
+          # Copy launchers and scripts
+          Copy-Item "START.bat" -Destination "$pkgDir/" -Force
+          Copy-Item "IT_SUPPORT_CENTER.bat" -Destination "$pkgDir/" -Force
+          Copy-Item "README.md" -Destination "$pkgDir/" -Force
+          Copy-Item "DISCLAIMER.md" -Destination "$pkgDir/" -Force
+          Copy-Item -Path "scripts" -Destination "$pkgDir/scripts" -Recurse -Force
+          Copy-Item -Path "assets" -Destination "$pkgDir/assets" -Recurse -Force
+
+          $zipName = "ITSupportCenter-$ver-Portable.zip"
+          Compress-Archive -Path "$pkgDir/*" -DestinationPath $zipName -CompressionLevel Optimal -Force
+          Write-Output "Created package: $zipName"
+
+          # Export env for upload step
+          echo "ZIP_NAME=$zipName" >> $env:GITHUB_ENV
+
+      - name: Upload to GitHub Release Assets
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+        with:
+          files: |
+            publish_bin/ITSupportCenter.exe
+            ITSupportCenter-*.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -12,11 +12,33 @@
 [![Architecture](https://img.shields.io/badge/Architecture-x64%20Single--File-E67E22?style=for-the-badge)](https://www.auracore.my.id)
 [![Developer](https://img.shields.io/badge/Developer-AuraCore-3498DB?style=for-the-badge&logo=googlechrome&logoColor=white)](https://www.auracore.my.id)
 
-[🌐 Kunjungi Website Resmi Pengembang (AuraCore)](https://www.auracore.my.id) • [📖 Panduan Pengembang (AI_DEV_GUIDE)](AI_DEV_GUIDE.md) • [⚖️ Disclaimer Hukum](DISCLAIMER.md)
+[🌐 Website Resmi Pengembang](https://www.auracore.my.id) • [📖 Panduan Pengembang (AI_DEV_GUIDE)](AI_DEV_GUIDE.md) • [⚖️ Disclaimer Hukum](DISCLAIMER.md)
+
+<p align="center">
+  <a href="https://github.com/protontekno-bit/ITSUPPORT_CENTER/releases/latest">
+    <img src="https://img.shields.io/badge/⬇️%20DOWNLOAD%20PORTABLE%20RELEASE-v3.2.0%20(Ready%20to%20Run)-2ecc71?style=for-the-badge&logo=windows&logoColor=white" alt="Download IT Support Center" height="40" />
+  </a>
+  <br/>
+  <sub>⚡ <b>Zero-Install:</b> Siap pakai langsung dari Flashdisk / Local Drive tanpa perlu install .NET SDK lagi!</sub>
+</p>
 
 ---
 
 </div>
+
+## 📥 Unduh Versi Siap Pakai (Pre-Compiled Downloads)
+
+Bagi teknisi lapangan, staf helpdesk, dan pengguna yang ingin langsung menjalankan aplikasi **tanpa perlu mengompilasi dari kode sumber**:
+
+| Berkas Unduhan | Deskripsi Paket | Ukuran & Kompatibilitas | Tautan Unduh |
+|:---|:---|:---:|:---:|
+| **📦 ITSupportCenter-v3.2.0-Portable.zip** | Paket Lengkap: GUI Portable `.exe` + `START.bat` + Skrip CLI 86 Menu + Assets | ~72 MB (Compressed) | [⬇️ **Download ZIP**](https://github.com/protontekno-bit/ITSUPPORT_CENTER/releases/latest) |
+| **⚡ ITSupportCenter.exe (Single-File)** | Biner Standalone GUI Mandiri (Langsung Double-Click jalan) | ~71.9 MB (Self-Contained) | [⬇️ **Download .EXE**](https://github.com/protontekno-bit/ITSUPPORT_CENTER/releases/latest/download/ITSupportCenter.exe) |
+
+> 💡 **Petunjuk Penggunaan:**  
+> Setelah mengunduh file `.zip` di atas, ekstrak ke mana saja (misal Flashdisk teknisi atau drive `D:\`), lalu cukup **klik ganda pada `START.bat`**. Aplikasi akan otomatis meminta hak Administrator dan membuka antarmuka GUI modern.
+
+---
 
 ## 📌 Mengapa IT Support Center?
 
