@@ -10,7 +10,7 @@
     <AssemblyName>ITSupportCenter</AssemblyName>
     <RootNamespace>ITSupportCenter</RootNamespace>
     <PublishSingleFile>true</PublishSingleFile>
-    <SelfContained>false</SelfContained>
+    <SelfContained>true</SelfContained>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
     <Version>3.2.0</Version>

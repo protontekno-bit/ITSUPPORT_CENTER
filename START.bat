@@ -32,21 +32,21 @@ set "IS_64BIT=0"
 if "%PROCESSOR_ARCHITECTURE%"=="AMD64" set "IS_64BIT=1"
 if "%PROCESSOR_ARCHITEW6432%"=="AMD64" set "IS_64BIT=1"
 
-:: 3. CARI LOKASI EXE TERBAIK
+:: 3. CARI LOKASI EXE TERBAIK & SINKRONISASI UPDATE
+if exist "%~dp0dist\final\ITSupportCenter.exe" (
+    copy /y "%~dp0dist\final\ITSupportCenter.exe" "%~dp0ITSupportCenter.exe" >nul 2>&1
+)
+
 set "SOURCE_EXE="
 if "%IS_64BIT%"=="1" (
-    if exist "%~dp0ITSupportCenter.exe" (
-        set "SOURCE_EXE=%~dp0ITSupportCenter.exe"
-    ) else if exist "%cd%\ITSupportCenter.exe" (
-        set "SOURCE_EXE=%cd%\ITSupportCenter.exe"
-    ) else if exist "%~dp0dist\final\ITSupportCenter.exe" (
+    if exist "%~dp0dist\final\ITSupportCenter.exe" (
         set "SOURCE_EXE=%~dp0dist\final\ITSupportCenter.exe"
     ) else if exist "%cd%\dist\final\ITSupportCenter.exe" (
         set "SOURCE_EXE=%cd%\dist\final\ITSupportCenter.exe"
-    ) else if exist "%~dp0dist\ITSupportCenter.exe" (
-        set "SOURCE_EXE=%~dp0dist\ITSupportCenter.exe"
-    ) else if exist "%cd%\dist\ITSupportCenter.exe" (
-        set "SOURCE_EXE=%cd%\dist\ITSupportCenter.exe"
+    ) else if exist "%~dp0ITSupportCenter.exe" (
+        set "SOURCE_EXE=%~dp0ITSupportCenter.exe"
+    ) else if exist "%cd%\ITSupportCenter.exe" (
+        set "SOURCE_EXE=%cd%\ITSupportCenter.exe"
     )
 )
 
