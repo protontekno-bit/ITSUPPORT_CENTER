@@ -33,21 +33,22 @@ if "%PROCESSOR_ARCHITECTURE%"=="AMD64" set "IS_64BIT=1"
 if "%PROCESSOR_ARCHITEW6432%"=="AMD64" set "IS_64BIT=1"
 
 :: 3. CARI LOKASI EXE TERBAIK & SINKRONISASI UPDATE
-if exist "%~dp0dist\build\ITSupportCenter.exe" (
-    copy /y "%~dp0dist\build\ITSupportCenter.exe" "%~dp0dist\latest\ITSupportCenter.exe" >nul 2>&1
+if exist "%~dp0dist\release\ITSupportCenter.exe" (
+    copy /y "%~dp0dist\release\ITSupportCenter.exe" "%~dp0dist\final\ITSupportCenter.exe" >nul 2>&1
+    copy /y "%~dp0dist\release\ITSupportCenter.exe" "%~dp0ITSupportCenter.exe" >nul 2>&1
+) else if exist "%~dp0dist\build\ITSupportCenter.exe" (
     copy /y "%~dp0dist\build\ITSupportCenter.exe" "%~dp0dist\final\ITSupportCenter.exe" >nul 2>&1
     copy /y "%~dp0dist\build\ITSupportCenter.exe" "%~dp0ITSupportCenter.exe" >nul 2>&1
 ) else if exist "%~dp0dist\final\ITSupportCenter.exe" (
     copy /y "%~dp0dist\final\ITSupportCenter.exe" "%~dp0dist\latest\ITSupportCenter.exe" >nul 2>&1
     copy /y "%~dp0dist\final\ITSupportCenter.exe" "%~dp0ITSupportCenter.exe" >nul 2>&1
-) else if exist "%~dp0dist\latest\ITSupportCenter.exe" (
-    copy /y "%~dp0dist\latest\ITSupportCenter.exe" "%~dp0dist\final\ITSupportCenter.exe" >nul 2>&1
-    copy /y "%~dp0dist\latest\ITSupportCenter.exe" "%~dp0ITSupportCenter.exe" >nul 2>&1
 )
 
 set "SOURCE_EXE="
 if "%IS_64BIT%"=="1" (
-    if exist "%~dp0dist\build\ITSupportCenter.exe" (
+    if exist "%~dp0dist\release\ITSupportCenter.exe" (
+        set "SOURCE_EXE=%~dp0dist\release\ITSupportCenter.exe"
+    ) else if exist "%~dp0dist\build\ITSupportCenter.exe" (
         set "SOURCE_EXE=%~dp0dist\build\ITSupportCenter.exe"
     ) else if exist "%~dp0dist\final\ITSupportCenter.exe" (
         set "SOURCE_EXE=%~dp0dist\final\ITSupportCenter.exe"

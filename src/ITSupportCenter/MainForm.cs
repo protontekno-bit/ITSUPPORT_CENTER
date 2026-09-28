@@ -46,6 +46,23 @@ namespace ITSupportCenter
             ForeColor = Color.FromArgb(236, 240, 241);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular);
 
+            try
+            {
+                string iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "assets", "app.ico");
+                if (File.Exists(iconPath))
+                {
+                    Icon = new Icon(iconPath);
+                }
+                else
+                {
+                    Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath) ?? SystemIcons.Application;
+                }
+            }
+            catch
+            {
+                try { Icon = SystemIcons.Application; } catch { }
+            }
+
             // Main Split Layout: Left (Tools & Controls) / Right (Log Console)
             var splitContainer = new SplitContainer
             {
