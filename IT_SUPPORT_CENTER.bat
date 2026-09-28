@@ -125,6 +125,10 @@ echo   67. 🚪 Pusat Buka / Tutup Port Firewall Kantor (RDP, Web, DB, Custom)
 echo   68. 🎛️ Saklar Status Profil Firewall (Domain, Private, Public)
 echo   69. 🦀 Pusat Manajemen ^& Utilitas RustDesk (Launch, Reset ID, Server, Service)
 echo   70. 🏢 Asisten Active Directory ^& Join Domain (Audit, Rename PC, Join AD, DC Test)
+echo   71. 🖥️ Pusat Manajemen ^& Aktivator Windows RDP (Enable, Port, Firewall, Shadowing)
+echo   72. 🔒 Kunci / Buka Update Microsoft Office Permanen (C2R Registry ^& Tasks)
+echo   73. 🚑 Pertolongan Pertama Office ^& Outlook (Safe Mode, scanpst.exe, Normal.dotm)
+echo   74. 🧹 Pembersih Konflik Lisensi ^& Akun Office (Ghost Key ^& Token Reset)
 echo.
 echo ============================================================================================
 echo   0.  ❌ Keluar
@@ -132,7 +136,7 @@ echo ===========================================================================
 echo.
 
 set "CHOICE="
-set /p "CHOICE=Masukkan Nomor Menu Pilihan Anda [0-70]: "
+set /p "CHOICE=Masukkan Nomor Menu Pilihan Anda [0-74]: "
 
 if "%CHOICE%"=="1" goto SHOW_PC_ASSET
 if "%CHOICE%"=="2" goto BATTERY_REPORT
@@ -204,7 +208,10 @@ if "%CHOICE%"=="67" goto PORT_MANAGER
 if "%CHOICE%"=="68" goto FIREWALL_PROFILES
 if "%CHOICE%"=="69" goto RUSTDESK_HUB
 if "%CHOICE%"=="70" goto AD_DOMAIN_ASSISTANT
-if "%CHOICE%"=="0" goto EXIT_APP
+if "%CHOICE%"=="71" goto RDP_MANAGER_HUB
+if "%CHOICE%"=="72" goto TOGGLE_OFFICE_LOCK
+if "%CHOICE%"=="73" goto OFFICE_RESCUE_HUB
+if "%CHOICE%"=="74" goto CLEAN_OFFICE_CONFLICT
 if "%CHOICE%"=="0" goto EXIT_APP
 
 echo.
@@ -654,6 +661,26 @@ goto BACK_TO_MENU
 :AD_DOMAIN_ASSISTANT
 cls
 call "%~dp0scripts\active_directory_domain_assistant.bat"
+goto BACK_TO_MENU
+
+:RDP_MANAGER_HUB
+cls
+call "%~dp0scripts\windows_rdp_manager_hub.bat"
+goto BACK_TO_MENU
+
+:TOGGLE_OFFICE_LOCK
+cls
+call "%~dp0scripts\toggle_office_update_lock.bat"
+goto BACK_TO_MENU
+
+:OFFICE_RESCUE_HUB
+cls
+call "%~dp0scripts\office_rescue_hub.bat"
+goto BACK_TO_MENU
+
+:CLEAN_OFFICE_CONFLICT
+cls
+call "%~dp0scripts\clean_office_license_conflict.bat"
 goto BACK_TO_MENU
 
 :BACK_TO_MENU
