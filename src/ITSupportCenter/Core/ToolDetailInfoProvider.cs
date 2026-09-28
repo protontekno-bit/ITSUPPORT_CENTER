@@ -163,6 +163,18 @@ namespace ITSupportCenter.Core
                 SystemImpact = "Mengeksekusi PowerShell Add-Computer / Rename-Computer / Remove-Computer dengan manajemen kredensial admin dan uji port AD (53, 88, 389, 445).",
                 UsageGuide = "1. Pastikan DNS komputer mengarah ke IP Domain Controller.\n2. Pilih menu [5] Uji Koneksi DC untuk memastikan port terbuka.\n3. Pilih menu [3] Gabung ke Domain dan masukkan kredensial Admin Domain."
             },
+            ["net_wol_ip_switcher"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Menyalakan komputer/server yang mati dari jarak jauh via LAN tanpa menyentuh tombol power fisik, serta beralih cepat antara konfigurasi DHCP Otomatis dan IP Statis khusus.",
+                SystemImpact = "Menyiarkan Magic Packet UDP broadcast (port 7 & 9) ke MAC Address tujuan dan mengatur IP stack via netsh.",
+                UsageGuide = "1. Klik tombol 'Wake-on-LAN & Profil IP'.\n2. Pilih opsi 1 dan masukkan MAC address target untuk menyalakan PC dari jarak jauh.\n3. Pilih opsi 2 atau 3 untuk mengatur IP statis / DHCP instan."
+            },
+            ["net_wifi_profile_exporter"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Mencadangkan seluruh profil Wi-Fi beserta passwordnya (format XML) dan mengimpornya kembali secara massal ke laptop-laptop baru tanpa perlu mengetik ulang sandi satu per satu.",
+                SystemImpact = "Mengeksekusi 'netsh wlan export profile' (key=clear) dan 'netsh wlan add profile' pada Windows WLAN Service.",
+                UsageGuide = "1. Klik tombol 'Ekspor / Impor Profil Wi-Fi'.\n2. Pilih Opsi 1 untuk mengekspor semua Wi-Fi ke folder Desktop.\n3. Bawa folder tersebut ke laptop baru dan jalankan Opsi 2 untuk memasang otomatis."
+            },
 
             // === SYSTEM MAINTENANCE & REPAIR ===
             ["sys_clean_temp"] = new ToolDetailInfo
@@ -356,6 +368,12 @@ namespace ITSupportCenter.Core
                 ProblemSolved = "Membuat Berita Acara & Laporan Servis Teknis PC resmi berformat HTML profesional siap cetak ke PDF untuk lampiran sistem tiket IT (Jira/GLPI) atau serah terima unit ke pengguna.",
                 SystemImpact = "Membaca spesifikasi hardware, serial number motherboard, kapasitas & S.M.A.R.T disk, merangkum tindakan perbaikan, dan menghasilkan laporan HTML rapi lengkap dengan blok tanda tangan.",
                 UsageGuide = "1. Klik tombol 'Cetak Laporan Servis IT'.\n2. Masukkan nama teknisi, nama pengguna, dan ringkasan tindakan perbaikan.\n3. Dokumen HTML akan terbuka otomatis di browser dan siap dicetak/disimpan ke PDF (Ctrl+P)."
+            },
+            ["sys_oneclick_tuneup_suite"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Melakukan rangkaian pemeliharaan rutin PC kantor secara cepat tanpa harus mengklik tombol satu per satu: membersihkan sampah temporary, memangkas RAM idle, me-refresh cache DNS/NetBIOS, menormalkan antrean print spooler, dan mengoptimalkan responsivitas visual.",
+                SystemImpact = "Mengeksekusi 5 tahap optimalisasi berantai secara otomatis dalam hitungan detik tanpa menutup software aktif pengguna.",
+                UsageGuide = "1. Klik tombol 'Jalankan 1-Klik Tune-Up Rutin'.\n2. Konfirmasi 'Yes' saat prompt pemeliharaan muncul.\n3. Pantau progres eksekusi di terminal hingga muncul pesan selesai."
             },
 
             // === REMOTE DESKTOP & SUPPORT ===

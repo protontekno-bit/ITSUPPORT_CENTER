@@ -131,6 +131,9 @@ echo   73. 🚑 Pertolongan Pertama Office ^& Outlook (Safe Mode, scanpst.exe, N
 echo   74. 🧹 Pembersih Konflik Lisensi ^& Akun Office (Ghost Key ^& Token Reset)
 echo   75. 💾 Penyelamatan ^& Migrasi Data User (Backup / Restore Profil, Desktop, Dokumen)
 echo   76. 📜 Cetak Berita Acara ^& Laporan Servis IT (HTML / Print to PDF)
+echo   77. ⚡ 1-Klik Pemeliharaan ^& Tune-Up Rutin Komputer (All-in-One)
+echo   78. ⚡ Wake-on-LAN (WoL) ^& Pengatur Cepat Profil IP (DHCP / Static)
+echo   79. 📶 Ekspor ^& Impor Massal Profil Wi-Fi (.XML Password Backup)
 echo.
 echo ============================================================================================
 echo   0.  ❌ Keluar
@@ -138,7 +141,7 @@ echo ===========================================================================
 echo.
 
 set "CHOICE="
-set /p "CHOICE=Masukkan Nomor Menu Pilihan Anda [0-76]: "
+set /p "CHOICE=Masukkan Nomor Menu Pilihan Anda [0-79]: "
 
 if "%CHOICE%"=="1" goto SHOW_PC_ASSET
 if "%CHOICE%"=="2" goto BATTERY_REPORT
@@ -216,6 +219,9 @@ if "%CHOICE%"=="73" goto OFFICE_RESCUE_HUB
 if "%CHOICE%"=="74" goto CLEAN_OFFICE_CONFLICT
 if "%CHOICE%"=="75" goto BACKUP_USER_PROFILE
 if "%CHOICE%"=="76" goto GENERATE_SERVICE_REPORT
+if "%CHOICE%"=="77" goto ROUTINE_TUNEUP
+if "%CHOICE%"=="78" goto WOL_IP_SWITCHER
+if "%CHOICE%"=="79" goto WIFI_PROFILE_EXPORTER
 if "%CHOICE%"=="0" goto EXIT_APP
 
 echo.
@@ -695,6 +701,21 @@ goto BACK_TO_MENU
 :GENERATE_SERVICE_REPORT
 cls
 call "%~dp0scripts\generate_service_report.bat"
+goto BACK_TO_MENU
+
+:ROUTINE_TUNEUP
+cls
+call "%~dp0scripts\routine_maintenance_suite.bat"
+goto BACK_TO_MENU
+
+:WOL_IP_SWITCHER
+cls
+call "%~dp0scripts\wol_ip_profile_switcher.bat"
+goto BACK_TO_MENU
+
+:WIFI_PROFILE_EXPORTER
+cls
+call "%~dp0scripts\export_import_wifi_profiles.bat"
 goto BACK_TO_MENU
 
 :BACK_TO_MENU

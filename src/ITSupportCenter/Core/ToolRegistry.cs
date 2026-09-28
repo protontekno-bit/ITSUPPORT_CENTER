@@ -82,6 +82,8 @@ namespace ITSupportCenter.Core
             Register(new CredentialManagerTool());
             Register(new RestoreAllSharingTool());
             Register(new ActiveDirectoryDomainAssistantTool());
+            Register(new WolAndIpProfileSwitcherTool());
+            Register(new WifiProfileExporterTool());
 
             // --- SYSTEM MAINTENANCE & REPAIR ---
             Register(new CleanSystemTempTool());
@@ -116,6 +118,7 @@ namespace ITSupportCenter.Core
             Register(new OfficeRescueHubTool());
             Register(new UserDataBackupRestoreTool());
             Register(new ServiceReportGeneratorTool());
+            Register(new OneClickTuneUpSuiteTool());
 
             // --- REMOTE DESKTOP & SUPPORT ---
             Register(new WindowsRdpManagerHubTool());
