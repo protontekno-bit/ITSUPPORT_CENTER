@@ -530,6 +530,24 @@ namespace ITSupportCenter.Core
                 ProblemSolved = "Meng-upgrade Windows 10/11 Home ke edisi Professional (Pro) tanpa perlu instal ulang atau format ulang.",
                 SystemImpact = "Memicu utilitas resmi Windows changepk.exe menggunakan generic activation switch key.",
                 UsageGuide = "Pastikan komputer terhubung ke internet saat proses upgrade edisi berlangsung."
+            },
+            ["net_tcp_port_checker"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Menguji keterbukaan port TCP spesifik (Web, Database, RDP, Mail, MikroTik) pada IP/Domain target dengan pengukuran latensi milidetik sebagai pengganti Telnet Client Windows.",
+                SystemImpact = "Mengirimkan probe TCP SYN non-invasif ke soket target, menghitung RTT dalam milidetik, dan mengidentifikasi status port (Open, Refused, Filtered).",
+                UsageGuide = "1. Klik tombol 'Uji Port TCP'.\n2. Masukkan Host IP/Domain dan nomor port (atau pilih dari daftar preset port populer).\n3. Lihat hasil pengukuran latensi dan status keterbukaan port pada log."
+            },
+            ["net_arp_mac_sniffer"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Memindai seluruh perangkat aktif di subnet LAN menggunakan protokol ARP Layer-2 (tidak dapat diblokir oleh Windows Firewall) dan mendeteksi konflik duplikasi IP/MAC.",
+                SystemImpact = "Mengirimkan frame ARP request paralel ke 254 host, memetakan alamat MAC ke vendor perangkat (OUI), dan mengaudit potensi tabrakan IP di jaringan.",
+                UsageGuide = "1. Klik tombol 'Pindai ARP & Konflik IP'.\n2. Konfirmasi awalan subnet LAN Anda.\n3. Periksa daftar host aktif beserta vendor dan peringatan duplikasi MAC."
+            },
+            ["net_adapter_power_cycler"] = new ToolDetailInfo
+            {
+                ProblemSolved = "Mengatasi kartu jaringan fisik (Ethernet/Wi-Fi) yang mengalami hang, driver crash (Code 43), atau status no internet tanpa perlu merestart seluruh komputer.",
+                SystemImpact = "Melakukan hard power-cycle pada interface kartu jaringan fisik melalui NetAdapter API & PnP bus rescan, diikuti pembersihan cache DNS dan pembaruan IP DHCP.",
+                UsageGuide = "1. Klik tombol 'Restart Fisik Adapter'.\n2. Pilih kartu jaringan yang bermasalah atau pilih 'SEMUA ADAPTER FISIK'.\n3. Tunggu siklus restart dan periksa pemulihan koneksi internet."
             }
         };
 

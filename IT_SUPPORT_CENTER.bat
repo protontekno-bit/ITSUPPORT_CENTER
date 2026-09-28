@@ -138,14 +138,17 @@ echo   80. 🕵️ Inspeksi Pembajakan Startup ^& Persistence (Sysinternals Lite
 echo   81. 🔧 Perbaikan Total WMI ^& Hak Akses Sistem (ACL Rebuilder)
 echo   82. 🚀 Aktivasi Ultimate Performance ^& Optimasi Latensi (CTT Style)
 echo   83. 🗑️ Penghapus Paksa Program Macet (Force Uninstaller)
+echo   84. 🔌 Penguji Port TCP ^& Latensi Soket (TCPing / Pengganti Telnet)
+echo   85. 📡 Pemindai ARP Layer-2 ^& Deteksi Konflik IP Jaringan
+echo   86. ⚡ Siklus Restart Keras Hardware Kartu Jaringan (NIC Power-Cycle)
 echo.
-echo ============================================================================================
+echo ==============================================================================
 echo   0.  ❌ Keluar
-echo ============================================================================================
+echo ==============================================================================
 echo.
 
 set "CHOICE="
-set /p "CHOICE=Masukkan Nomor Menu Pilihan Anda [0-83]: "
+set /p "CHOICE=Masukkan Nomor Menu Pilihan Anda [0-86]: "
 
 if "%CHOICE%"=="1" goto SHOW_PC_ASSET
 if "%CHOICE%"=="2" goto BATTERY_REPORT
@@ -230,6 +233,9 @@ if "%CHOICE%"=="80" goto AUTORUNS_INSPECTOR
 if "%CHOICE%"=="81" goto WMI_ACL_REBUILD
 if "%CHOICE%"=="82" goto ULTIMATE_PERF
 if "%CHOICE%"=="83" goto FORCE_UNINSTALL
+if "%CHOICE%"=="84" goto TCP_PORT_CHECKER
+if "%CHOICE%"=="85" goto ARP_SCANNER
+if "%CHOICE%"=="86" goto NIC_POWERCYCLE
 if "%CHOICE%"=="0" goto EXIT_APP
 
 echo.
@@ -744,6 +750,21 @@ goto BACK_TO_MENU
 :FORCE_UNINSTALL
 cls
 call "%~dp0scripts\force_software_nuker.bat"
+goto BACK_TO_MENU
+
+:TCP_PORT_CHECKER
+cls
+call "%~dp0scripts\test_tcp_port_socket.bat"
+goto BACK_TO_MENU
+
+:ARP_SCANNER
+cls
+call "%~dp0scripts\arp_layer2_subnet_scanner.bat"
+goto BACK_TO_MENU
+
+:NIC_POWERCYCLE
+cls
+call "%~dp0scripts\cycle_network_adapter_hard_reset.bat"
 goto BACK_TO_MENU
 
 :BACK_TO_MENU

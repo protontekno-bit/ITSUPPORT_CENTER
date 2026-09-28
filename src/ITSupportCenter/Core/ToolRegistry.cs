@@ -84,6 +84,9 @@ namespace ITSupportCenter.Core
             Register(new ActiveDirectoryDomainAssistantTool());
             Register(new WolAndIpProfileSwitcherTool());
             Register(new WifiProfileExporterTool());
+            Register(new TcpPortCheckerTool());
+            Register(new ArpScannerAndConflictTool());
+            Register(new NetworkAdapterPowerCyclerTool());
 
             // --- SYSTEM MAINTENANCE & REPAIR ---
             Register(new CleanSystemTempTool());
