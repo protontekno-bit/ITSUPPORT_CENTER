@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ITSupportCenter.Core;
@@ -22,10 +23,18 @@ namespace ITSupportCenter
         private StatusStrip _statusStrip = null!;
         private ToolStripStatusLabel _lblStatusInfo = null!;
         private ToolStripProgressBar _progressBar = null!;
+        private ToolStripButton _btnCancelOperation = null!;
         private FlowLayoutPanel _categoryFilterPanel = null!;
         private string _selectedCategory = ToolCategory.All;
         private readonly Dictionary<string, Button> _categoryButtons = new();
         private readonly List<ActionCardControl> _activeCards = new();
+
+        // Concurrency Guard & Execution State Management
+        private bool _isExecuting = false;
+        private string? _runningToolId = null;
+        private string? _runningToolTitle = null;
+        private CancellationTokenSource? _currentCts = null;
+        private readonly SemaphoreSlim _executionLock = new(1, 1);
 
         public MainForm()
         {
@@ -377,6 +386,18 @@ namespace ITSupportCenter
                 Font = new Font("Segoe UI", 9F, FontStyle.Regular)
             };
 
+            _btnCancelOperation = new ToolStripButton
+            {
+                Text = "⛔ Batalkan",
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(192, 57, 43), // Crimson Red
+                Font = new Font("Segoe UI", 8.5F, FontStyle.Bold),
+                Visible = false,
+                DisplayStyle = ToolStripItemDisplayStyle.Text,
+                Margin = new Padding(6, 2, 6, 2)
+            };
+            _btnCancelOperation.Click += (s, e) => RequestCancelExecution();
+
             _progressBar = new ToolStripProgressBar
             {
                 Width = 140,
@@ -411,6 +432,7 @@ namespace ITSupportCenter
             };
 
             _statusStrip.Items.Add(_lblStatusInfo);
+            _statusStrip.Items.Add(_btnCancelOperation);
             _statusStrip.Items.Add(_progressBar);
             _statusStrip.Items.Add(lblDeveloperLink);
 
@@ -476,80 +498,204 @@ namespace ITSupportCenter
             foreach (var tool in filteredTools)
             {
                 var card = new ActionCardControl(tool, async (c, t) => await ExecuteToolAsync(c, t));
+                if (_isExecuting)
+                {
+                    if (tool.Id.Equals(_runningToolId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        card.SetBusy(true);
+                    }
+                    else
+                    {
+                        card.SetLockedByOther(true);
+                    }
+                }
                 _activeCards.Add(card);
                 _cardsContainer.Controls.Add(card);
             }
 
-            _lblStatusInfo.ForeColor = Color.FromArgb(189, 195, 199);
-            _lblStatusInfo.Text = $"Status: Siap | Menampilkan {filteredTools.Count} modul IT ({_selectedCategory})";
+            if (!_isExecuting)
+            {
+                _lblStatusInfo.ForeColor = Color.FromArgb(189, 195, 199);
+                _lblStatusInfo.Text = $"Status: Siap | Menampilkan {filteredTools.Count} modul IT ({_selectedCategory})";
+            }
             _statusStrip.Refresh();
             _cardsContainer.ResumeLayout();
         }
 
-        private async Task ExecuteToolAsync(ActionCardControl card, IToolCommand tool)
+        public bool CanExecuteTool(string toolId, out string reason)
         {
-            card.SetBusy(true);
-            _progressBar.Visible = true;
-            _lblStatusInfo.ForeColor = Color.FromArgb(52, 152, 219);
-            _lblStatusInfo.Text = $"Status: Menjalankan '{tool.Title}'...";
+            if (_isExecuting)
+            {
+                reason = $"Modul '{_runningToolTitle}' saat ini sedang berjalan!\n\nUntuk menjaga integritas sistem Windows dan mencegah konflik registry/service/network, harap tunggu sampai proses selesai atau klik '⛔ Batalkan' di status bar.";
+                return false;
+            }
+            reason = string.Empty;
+            return true;
+        }
+
+        private void RequestCancelExecution()
+        {
+            if (_isExecuting && _currentCts != null && !_currentCts.IsCancellationRequested)
+            {
+                _btnCancelOperation.Enabled = false;
+                _btnCancelOperation.Text = "⏳ Menghentikan...";
+                _lblStatusInfo.ForeColor = Color.FromArgb(241, 196, 15);
+                _lblStatusInfo.Text = $"Status: Menghentikan '{_runningToolTitle}'...";
+                Logger.Log($"⚠️ [USER CANCEL] Permintaan pembatalan dikirim untuk '{_runningToolTitle}'. Menghentikan proses latar belakang...", LogType.Warning);
+
+                try
+                {
+                    _currentCts.Cancel();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log($"Gagal membatalkan proses: {ex.Message}", LogType.Error);
+                }
+            }
+        }
+
+        private void SyncCardsState()
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(SyncCardsState));
+                return;
+            }
+
+            foreach (var card in _activeCards)
+            {
+                if (!_isExecuting)
+                {
+                    card.SetBusy(false);
+                    card.SetLockedByOther(false);
+                }
+                else
+                {
+                    if (card.Tool.Id.Equals(_runningToolId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        card.SetBusy(true);
+                    }
+                    else
+                    {
+                        card.SetLockedByOther(true);
+                    }
+                }
+            }
+
+            _cardsContainer.Invalidate(true);
+            _cardsContainer.Update();
             _statusStrip.Refresh();
+        }
 
-            var sw = Stopwatch.StartNew();
-            string status = "Success";
-            string summary = "Operasi selesai dengan sukses";
+        private async Task ExecuteToolAsync(ActionCardControl? card, IToolCommand tool)
+        {
+            if (!CanExecuteTool(tool.Id, out string reason))
+            {
+                MessageBox.Show(this, reason, "Operasi Sedang Berjalan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            await _executionLock.WaitAsync();
             try
             {
-                await tool.ExecuteAsync();
-            }
-            catch (Exception ex)
-            {
-                status = "Error";
-                summary = ex.Message;
-                Logger.Log($"[FATAL ERROR] Gagal menjalankan {tool.Title}: {ex.Message}", LogType.Error);
+                if (_isExecuting)
+                {
+                    MessageBox.Show(this, $"Operasi lain '{_runningToolTitle}' sudah aktif.", "Operasi Sedang Berjalan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                _isExecuting = true;
+                _runningToolId = tool.Id;
+                _runningToolTitle = tool.Title;
+                _currentCts = new CancellationTokenSource();
+                CommandRunner.CurrentToken = _currentCts.Token;
+
+                _btnCancelOperation.Visible = true;
+                _btnCancelOperation.Enabled = true;
+                _btnCancelOperation.Text = "⛔ Batalkan";
+                _progressBar.Visible = true;
+                _lblStatusInfo.ForeColor = Color.FromArgb(52, 152, 219);
+                _lblStatusInfo.Text = $"Status: Menjalankan '{tool.Title}'...";
+                _statusStrip.Refresh();
+
+                SyncCardsState();
+
+                var sw = Stopwatch.StartNew();
+                string status = "Success";
+                string summary = "Operasi selesai dengan sukses";
+
+                try
+                {
+                    await tool.ExecuteAsync();
+
+                    if (_currentCts != null && _currentCts.IsCancellationRequested)
+                    {
+                        status = "Cancelled";
+                        summary = "Operasi dibatalkan oleh pengguna.";
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    status = "Cancelled";
+                    summary = "Operasi dibatalkan oleh pengguna.";
+                    Logger.Log($"[BATAL] Operasi '{tool.Title}' dihentikan oleh pengguna.", LogType.Warning);
+                }
+                catch (Exception ex)
+                {
+                    status = "Error";
+                    summary = ex.Message;
+                    Logger.Log($"[FATAL ERROR] Gagal menjalankan {tool.Title}: {ex.Message}", LogType.Error);
+                }
+                finally
+                {
+                    sw.Stop();
+                    SessionHistoryTracker.Record(tool.Id, tool.Title, tool.Category, sw.Elapsed.TotalSeconds, status, summary);
+
+                    _isExecuting = false;
+                    _runningToolId = null;
+                    _runningToolTitle = null;
+
+                    try
+                    {
+                        _currentCts?.Dispose();
+                    }
+                    catch { }
+                    _currentCts = null;
+                    CommandRunner.CurrentToken = CancellationToken.None;
+
+                    _btnCancelOperation.Visible = false;
+                    _progressBar.Visible = false;
+
+                    if (status == "Cancelled")
+                    {
+                        _lblStatusInfo.ForeColor = Color.FromArgb(241, 196, 15);
+                        _lblStatusInfo.Text = $"Status: Dibatalkan | '{tool.Title}' dihentikan ({sw.Elapsed.TotalSeconds:F1}s)";
+                    }
+                    else if (status == "Error")
+                    {
+                        _lblStatusInfo.ForeColor = Color.FromArgb(231, 76, 60);
+                        _lblStatusInfo.Text = $"Status: Error | '{tool.Title}' gagal ({sw.Elapsed.TotalSeconds:F1}s)";
+                    }
+                    else
+                    {
+                        _lblStatusInfo.ForeColor = Color.FromArgb(46, 204, 113);
+                        _lblStatusInfo.Text = $"Status: Siap | '{tool.Title}' selesai dalam {sw.Elapsed.TotalSeconds:F1}s";
+                    }
+
+                    SyncCardsState();
+                    _statusStrip.Refresh();
+                }
             }
             finally
             {
-                sw.Stop();
-                SessionHistoryTracker.Record(tool.Id, tool.Title, tool.Category, sw.Elapsed.TotalSeconds, status, summary);
-                card.SetBusy(false);
-                _progressBar.Visible = false;
-                _lblStatusInfo.ForeColor = (status == "Error") ? Color.FromArgb(231, 76, 60) : Color.FromArgb(46, 204, 113);
-                _lblStatusInfo.Text = $"Status: Siap | '{tool.Title}' selesai dalam {sw.Elapsed.TotalSeconds:F1}s";
-                _statusStrip.Refresh();
+                _executionLock.Release();
             }
         }
 
         public async Task ExecuteToolDirectlyAsync(IToolCommand tool)
         {
-            _progressBar.Visible = true;
-            _lblStatusInfo.ForeColor = Color.FromArgb(52, 152, 219);
-            _lblStatusInfo.Text = $"Status: Menjalankan '{tool.Title}'...";
-            _statusStrip.Refresh();
-
-            var sw = Stopwatch.StartNew();
-            string status = "Success";
-            string summary = "Operasi selesai dengan sukses";
-
-            try
-            {
-                await tool.ExecuteAsync();
-            }
-            catch (Exception ex)
-            {
-                status = "Error";
-                summary = ex.Message;
-                Logger.Log($"[FATAL ERROR] Gagal menjalankan {tool.Title}: {ex.Message}", LogType.Error);
-            }
-            finally
-            {
-                sw.Stop();
-                SessionHistoryTracker.Record(tool.Id, tool.Title, tool.Category, sw.Elapsed.TotalSeconds, status, summary);
-                _progressBar.Visible = false;
-                _lblStatusInfo.ForeColor = (status == "Error") ? Color.FromArgb(231, 76, 60) : Color.FromArgb(46, 204, 113);
-                _lblStatusInfo.Text = $"Status: Siap | '{tool.Title}' selesai dalam {sw.Elapsed.TotalSeconds:F1}s";
-                _statusStrip.Refresh();
-            }
+            var card = _activeCards.FirstOrDefault(c => c.Tool.Id.Equals(tool.Id, StringComparison.OrdinalIgnoreCase));
+            await ExecuteToolAsync(card, tool);
         }
 
         public void JumpAndHighlightTool(string toolId)

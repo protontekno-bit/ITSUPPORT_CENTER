@@ -136,6 +136,8 @@ namespace ITSupportCenter.UI
             e.Graphics.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
         }
 
+        public IToolCommand Tool => _tool;
+
         public void SetBusy(bool isBusy)
         {
             if (InvokeRequired)
@@ -147,11 +149,39 @@ namespace ITSupportCenter.UI
             if (isBusy)
             {
                 _btnAction.Text = "⏳ Memproses...";
+                _btnAction.BackColor = Color.FromArgb(230, 126, 34); // Pumpkin Orange
             }
             else
             {
                 _btnAction.Text = _tool.ButtonText;
+                _btnAction.BackColor = _tool.ButtonColor;
             }
+            _btnAction.Refresh();
+            Invalidate();
+            Update();
+        }
+
+        public void SetLockedByOther(bool isLocked)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action(() => SetLockedByOther(isLocked)));
+                return;
+            }
+            _btnAction.Enabled = !isLocked;
+            if (isLocked)
+            {
+                _btnAction.Text = "⏸️ Antrian Terkunci";
+                _btnAction.BackColor = Color.FromArgb(65, 72, 88); // Muted Dark Slate
+            }
+            else
+            {
+                _btnAction.Text = _tool.ButtonText;
+                _btnAction.BackColor = _tool.ButtonColor;
+            }
+            _btnAction.Refresh();
+            Invalidate();
+            Update();
         }
     }
 }

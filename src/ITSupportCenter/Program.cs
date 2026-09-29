@@ -21,8 +21,15 @@ namespace ITSupportCenter
 
             Application.ThreadException += (s, e) =>
             {
-                MessageBox.Show($"Pemberitahuan Sistem:\n{e.Exception.Message}",
-                    "IT Support Center", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                try
+                {
+                    string msg = !string.IsNullOrWhiteSpace(e.Exception?.Message)
+                        ? e.Exception.Message
+                        : e.Exception?.ToString() ?? "Terjadi pengecualian internal antarmuka.";
+
+                    Core.Logger.Log($"[PERINGATAN SISTEM] {msg}", Core.LogType.Warning);
+                }
+                catch { }
             };
 
             // 2. Network Share Staging & Self-Healing Launcher

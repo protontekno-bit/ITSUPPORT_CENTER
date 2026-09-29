@@ -545,6 +545,12 @@ namespace ITSupportCenter.UI
                 // Click handler: Direct Execution with feedback
                 btn.Click += async (s, e) =>
                 {
+                    if (!_mainForm.CanExecuteTool(tool.Id, out string reason))
+                    {
+                        MessageBox.Show(this, reason, "Operasi Sedang Berjalan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     btn.Enabled = false;
                     btn.Text = $"⏳ Menjalankan {tool.Icon}...";
                     try

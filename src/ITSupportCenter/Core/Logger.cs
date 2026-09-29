@@ -33,35 +33,41 @@ namespace ITSupportCenter.Core
                 return;
             }
 
-            string timestamp = DateTime.Now.ToString("HH:mm:ss");
-            Color color = type switch
+            try
             {
-                LogType.Success => Color.FromArgb(46, 204, 113),   // Emerald Green
-                LogType.Warning => Color.FromArgb(241, 196, 15),   // Sunflower Yellow
-                LogType.Error => Color.FromArgb(231, 76, 60),      // Alizarin Red
-                _ => Color.FromArgb(189, 195, 199)                  // Light Silver
-            };
+                if (_logBox.IsDisposed) return;
 
-            string prefix = type switch
-            {
-                LogType.Success => "[SUKSES] ",
-                LogType.Warning => "[WARN]   ",
-                LogType.Error => "[ERROR]  ",
-                _ => "[INFO]   "
-            };
+                string timestamp = DateTime.Now.ToString("HH:mm:ss");
+                Color color = type switch
+                {
+                    LogType.Success => Color.FromArgb(46, 204, 113),   // Emerald Green
+                    LogType.Warning => Color.FromArgb(241, 196, 15),   // Sunflower Yellow
+                    LogType.Error => Color.FromArgb(231, 76, 60),      // Alizarin Red
+                    _ => Color.FromArgb(189, 195, 199)                  // Light Silver
+                };
 
-            _logBox.SelectionStart = _logBox.TextLength;
-            _logBox.SelectionLength = 0;
-            _logBox.SelectionColor = Color.FromArgb(127, 140, 141);
-            _logBox.AppendText($"[{timestamp}] ");
+                string prefix = type switch
+                {
+                    LogType.Success => "[SUKSES] ",
+                    LogType.Warning => "[WARN]   ",
+                    LogType.Error => "[ERROR]  ",
+                    _ => "[INFO]   "
+                };
 
-            _logBox.SelectionColor = color;
-            _logBox.AppendText(prefix);
+                _logBox.SelectionStart = _logBox.TextLength;
+                _logBox.SelectionLength = 0;
+                _logBox.SelectionColor = Color.FromArgb(127, 140, 141);
+                _logBox.AppendText($"[{timestamp}] ");
 
-            _logBox.SelectionColor = Color.FromArgb(236, 240, 241);
-            _logBox.AppendText(message + Environment.NewLine);
+                _logBox.SelectionColor = color;
+                _logBox.AppendText(prefix);
 
-            _logBox.ScrollToCaret();
+                _logBox.SelectionColor = Color.FromArgb(236, 240, 241);
+                _logBox.AppendText(message + Environment.NewLine);
+
+                _logBox.ScrollToCaret();
+            }
+            catch { }
         }
 
         public static void Clear()

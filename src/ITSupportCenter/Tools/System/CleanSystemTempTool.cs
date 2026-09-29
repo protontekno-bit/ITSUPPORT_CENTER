@@ -52,6 +52,9 @@ namespace ITSupportCenter.Tools.SystemTools
                 {
                     try
                     {
+                        if (file.Name.StartsWith("ITSupportCenter", StringComparison.OrdinalIgnoreCase))
+                            continue;
+
                         long len = file.Length;
                         file.Delete();
                         totalBytesCleaned += len;
@@ -67,6 +70,12 @@ namespace ITSupportCenter.Tools.SystemTools
                 {
                     try
                     {
+                        if (subDir.Name.Equals(".net", StringComparison.OrdinalIgnoreCase) ||
+                            subDir.Name.IndexOf("ITSupportCenter", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            continue;
+                        }
+
                         subDir.Delete(true);
                     }
                     catch { }

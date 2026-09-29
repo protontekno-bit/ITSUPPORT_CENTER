@@ -100,6 +100,12 @@ namespace ITSupportCenter.UI
             btnRun.FlatAppearance.BorderSize = 0;
             btnRun.Click += async (s, e) =>
             {
+                if (_mainForm != null && !_mainForm.CanExecuteTool(_tool.Id, out string reason))
+                {
+                    MessageBox.Show(this, reason, "Operasi Sedang Berjalan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 btnRun.Enabled = false;
                 btnRun.Text = "⏳ Memproses...";
                 try

@@ -19,7 +19,10 @@ namespace ITSupportCenter.Services
     public static class SessionHistoryTracker
     {
         private static readonly List<ActionHistoryItem> _items = new();
-        private static readonly string _historyFilePath = Path.Combine(Path.GetTempPath(), $"ITSupportCenter_session_{Environment.MachineName}.json");
+        private static readonly string _historyFilePath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "ITSupportCenter",
+            $"ITSupportCenter_session_{Environment.MachineName}.json");
 
         public static void Record(string toolId, string toolTitle, string category, double durationSeconds, string status, string summary)
         {
@@ -55,6 +58,12 @@ namespace ITSupportCenter.Services
             {
                 try
                 {
+                    string dir = Path.GetDirectoryName(_historyFilePath)!;
+                    if (!Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
+
                     string json;
                     lock (_items)
                     {

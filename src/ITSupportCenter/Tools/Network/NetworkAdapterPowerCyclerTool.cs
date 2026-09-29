@@ -49,33 +49,13 @@ namespace ITSupportCenter.Tools.Network
                 {
                     Logger.Log($"[1/4] Merestart adapter hardware: '{nic}' via NetAdapter API...", LogType.Info);
 
-                    bool psSuccess = false;
-                    try
-                    {
-                        var psi = new ProcessStartInfo
-                        {
-                            FileName = "powershell.exe",
-                            Arguments = $"-NoProfile -ExecutionPolicy Bypass -Command \"Restart-NetAdapter -Name '{nic}' -Confirm:$false\"",
-                            CreateNoWindow = true,
-                            UseShellExecute = false,
-                            RedirectStandardOutput = true,
-                            RedirectStandardError = true
-                        };
-                        using var proc = Process.Start(psi);
-                        if (proc != null)
-                        {
-                            await proc.WaitForExitAsync();
-                            if (proc.ExitCode == 0) psSuccess = true;
-                        }
-                    }
-                    catch { }
-
-                    if (!psSuccess)
+                    int psExit = await CommandRunner.RunPowerShellAsync($"Restart-NetAdapter -Name '{nic}' -Confirm:$false");
+                    if (psExit != 0)
                     {
                         Logger.Log($"Fallback: Menonaktifkan & mengaktifkan ulang '{nic}' via Netsh...", LogType.Warning);
-                        ExecuteCmd($"netsh interface set interface \"{nic}\" admin=disable");
+                        await CommandRunner.RunCmdAsync($"netsh interface set interface \"{nic}\" admin=disable");
                         await Task.Delay(2000);
-                        ExecuteCmd($"netsh interface set interface \"{nic}\" admin=enable");
+                        await CommandRunner.RunCmdAsync($"netsh interface set interface \"{nic}\" admin=enable");
                     }
                     else
                     {
@@ -86,32 +66,38 @@ namespace ITSupportCenter.Tools.Network
                 }
 
                 Logger.Log("[2/4] Melakukan PnP Hardware Bus Rescan (pnputil /scan-devices)...", LogType.Info);
-                ExecuteCmd("pnputil /scan-devices");
+                await CommandRunner.RunCmdAsync("pnputil /scan-devices", s => Logger.Log(s, LogType.Info));
 
                 Logger.Log("[3/4] Mengosongkan DNS Cache & Memperbarui Alamat IP (DHCP Lease)...", LogType.Info);
-                ExecuteCmd("ipconfig /flushdns");
-                ExecuteCmd("ipconfig /renew");
+                await CommandRunner.RunCmdAsync("ipconfig /flushdns");
+                await CommandRunner.RunCmdAsync("ipconfig /renew", s =>
+                {
+                    if (s.Contains("IPv4") || s.Contains("Default Gateway") || s.Contains("Alamat"))
+                        Logger.Log(s.Trim(), LogType.Success);
+                });
 
                 Logger.Log("[4/4] Menguji stabilitas koneksi pasca-restart...", LogType.Info);
-                await Task.Delay(2500);
+                await Task.Delay(1500);
 
                 try
                 {
                     using var ping = new Ping();
-                    var reply = await ping.SendPingAsync("8.8.8.8", 3000);
+                    var reply = await ping.SendPingAsync("8.8.8.8", 2500);
                     if (reply.Status == IPStatus.Success)
                     {
                         Logger.Log($"✅ SUKSES: Koneksi internet pulih normal! RTT: {reply.RoundtripTime}ms", LogType.Success);
                     }
                     else
                     {
-                        Logger.Log("⚠️ Adapter telah di-restart. Tunggu 5-10 detik hingga DHCP selesai bernegosiasi.", LogType.Warning);
+                        Logger.Log("⚠️ Adapter telah di-restart. Tunggu beberapa detik hingga DHCP selesai bernegosiasi.", LogType.Warning);
                     }
                 }
                 catch
                 {
                     Logger.Log("Siklus restart adapter selesai. Periksa ikon jaringan di taskbar Windows.", LogType.Info);
                 }
+
+                Logger.Log("🎉 [SELESAI] Seluruh rangkaian siklus restart adapter hardware telah selesai!", LogType.Success);
             });
         }
 
@@ -181,23 +167,6 @@ namespace ITSupportCenter.Tools.Network
             form.CancelButton = btnCancel;
 
             return form.ShowDialog() == DialogResult.OK ? cmb.SelectedItem?.ToString() ?? "" : "";
-        }
-
-        private static void ExecuteCmd(string command)
-        {
-            try
-            {
-                var psi = new ProcessStartInfo
-                {
-                    FileName = "cmd.exe",
-                    Arguments = $"/c {command}",
-                    CreateNoWindow = true,
-                    UseShellExecute = false
-                };
-                using var proc = Process.Start(psi);
-                proc?.WaitForExit(5000);
-            }
-            catch { }
         }
     }
 }
